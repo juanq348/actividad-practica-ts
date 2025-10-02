@@ -13,16 +13,22 @@ export const listEquipment = async(filter: any = {}) => {
     return Equipment.findAll({where:filter, include:[{model:User, as:'owner', attributes:['id', 'name', 'email'] }] });
 };
 
-export const getEquipmentById = async(id:number, data:any) =>{
-    const equipment = await Equipment.findByPk(id,{include:[{model:User, as:'owner', attributes:['id', 'name', 'email'] }] });
+export const getEquipmentById = async(id:number) => {
+    const equipment = await Equipment.findByPk(id, {include:[{model:User, as : 'owner', attributes:['id','name','email']}]});
+    if(!equipment) throw new ApiError(404, 'Equipo no encontrado');
+    return equipment;
+}
+
+export const updateEquipment = async (id:number, data:any) =>{
+    const equipment = await Equipment.findByPk(id);
     if(!equipment) throw new ApiError(404, 'Equipo no encontrado');
     if(data.serialNumber && data.serialNumber !== equipment.serialNumber){
         const exists = await Equipment.findOne({where:{serialNumber: data.serialNumber} });
         if(exists) throw new ApiError(400, 'Serial ya registrado');
     }
     await equipment.update(data);
-    return equipment;
-};
+    return equipment
+}
 
 export const deleteEquipmentById = async(id:number) => {
     const equipment = await Equipment.findByPk(id);

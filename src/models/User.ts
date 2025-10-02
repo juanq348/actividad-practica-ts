@@ -11,15 +11,12 @@ export interface IUserInformation {
     role? : UserRole
 }
 
-export default class User extends Model<IUserInformation> implements IUserInformation{
-    public id!:number;
-    public name! : string;
-    public email! : string;
-    public password! : string;
-    public role! : UserRole
-
-    public readonly createdAt! : Date;
-    public readonly updatedAt! : Date;
+export default class User extends Model<IUserInformation>{
+    declare id? : number;
+    declare name : string;
+    declare email : string;
+    declare password : string;
+    declare role? : UserRole;
 }
 
 User.init(

@@ -1,6 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/db.js";
-import { User } from "./User.js";
+import User from "./User.js";
 
 export type EquipmentState = 'disponible' | 'en_uso' | 'en_reparacion' | 'no_disponible'; 
 
@@ -16,19 +16,19 @@ export interface IEquipment{
     state? : EquipmentState,
 }
 
-export class Equipment extends Model<IEquipment> implements IEquipment{
-    public id! : number;
-    public name! : string;
-    public brand! : string;
-    public model! : string;
-    public serialNumber!: string;
-    public ownerId! : number | null;
-    public description! : string;
-    public location! : string;
-    public state!: EquipmentState;
+export class Equipment extends Model<IEquipment>{
+    declare id: number;
+    declare name: string;
+    declare brand?: string;
+    declare model?: string;
+    declare serialNumber: string;
+    declare ownerId?: number | null;
+    declare description: string;
+    declare location: string;
+    declare state: EquipmentState;
 
-    public readonly createAt! : Date;
-    public readonly updatedAt! : Date;
+    declare readonly createdAt: Date;
+    declare readonly updatedAt: Date;
 }
 
 Equipment.init(
@@ -37,10 +37,10 @@ Equipment.init(
     serialNumber: {type:DataTypes.STRING, allowNull: false, unique:true},
     name:{type:DataTypes.STRING, allowNull:false},
     brand:{type:DataTypes.STRING},
-    ownerId:{type:DataTypes.STRING, allowNull: true},
+    ownerId:{type:DataTypes.INTEGER, allowNull: true},
     description:{type:DataTypes.STRING},
     location:{type:DataTypes.STRING},
-    state:{type: DataTypes.ENUM('disponible', 'en_uso', 'en_reparacion', 'no_disponible'),defaultValue: 'available'},
+    state:{type: DataTypes.ENUM('disponible', 'en_uso', 'en_reparacion', 'no_disponible'),defaultValue: 'disponible'},
     },
     {
     sequelize,
