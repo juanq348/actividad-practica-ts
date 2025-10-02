@@ -11,7 +11,7 @@ export interface IUserInformation {
     role? : UserRole
 }
 
-export class User extends Model<IUserInformation> implements IUserInformation{
+export default class User extends Model<IUserInformation> implements IUserInformation{
     public id!:number;
     public name! : string;
     public email! : string;
