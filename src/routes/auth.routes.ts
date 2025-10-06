@@ -14,7 +14,7 @@ router.post(
 
 router.post(
     '/register', 
-    // authenticate, 
+    authenticate, 
     [
         body('name').notEmpty(), 
         body('email').isEmail(), 
